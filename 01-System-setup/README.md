@@ -1,13 +1,3 @@
-Here is your **final `README.md`** with all your requested updates:
-
-* ✅ `snapd` install added before Git.
-* ✅ Git, Java, Jenkins installed via `snap`.
-* ✅ Removed SSH key section.
-* ✅ Added `curl` and `chromium` install in Jenkins section.
-
----
-
-````markdown
 # 🚀 DevOps Lab Setup Guide – `devops-pro-series`
 
 Welcome to the DevOps Pro Series Lab! This guide helps you set up a local development environment using **VirtualBox**, **Ubuntu**, and essential DevOps tools like **GitHub**, **Jenkins**, and **Minikube**.
