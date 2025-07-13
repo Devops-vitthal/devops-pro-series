@@ -1,4 +1,13 @@
+Here is your **final `README.md`** with all your requested updates:
 
+* ✅ `snapd` install added before Git.
+* ✅ Git, Java, Jenkins installed via `snap`.
+* ✅ Removed SSH key section.
+* ✅ Added `curl` and `chromium` install in Jenkins section.
+
+---
+
+````markdown
 # 🚀 DevOps Lab Setup Guide – `devops-pro-series`
 
 Welcome to the DevOps Pro Series Lab! This guide helps you set up a local development environment using **VirtualBox**, **Ubuntu**, and essential DevOps tools like **GitHub**, **Jenkins**, and **Minikube**.
@@ -92,11 +101,24 @@ sudo reboot
 
 ## 🐙 Step 3: Install Git & Configure GitHub
 
-### ✅ Install Git
+### 🧩 Install Snap (if not already installed)
 
 ```bash
-sudo apt install git -y
+sudo apt update && sudo apt install snapd -y
+sudo systemctl enable --now snapd.socket
 ```
+
+Reboot your VM or log out and back in.
+
+---
+
+### ✅ Install Git via Snap
+
+```bash
+sudo snap install git --classic
+```
+
+---
 
 ### 🔗 Set Up Git Identity
 
@@ -105,54 +127,66 @@ git config --global user.name "Your Name"
 git config --global user.email "your@email.com"
 ```
 
-### 🔐 Generate SSH Key and Add to GitHub
-
-```bash
-ssh-keygen -t ed25519 -C "your@email.com"
-cat ~/.ssh/id_ed25519.pub
-```
-
-➡️ Copy the key output and add it to GitHub:
-**GitHub > Settings > SSH and GPG Keys > New SSH Key**
-
 ---
 
 ## 🔧 Step 4: Install Jenkins
 
-### ☕ Install Java (Jenkins requirement)
-
-```bash
-sudo apt install openjdk-17-jdk -y
-```
-
-### 📥 Add Jenkins Repository
-
-```bash
-curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
-  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-  /etc/apt/sources.list.d/jenkins.list > /dev/null
-```
-
-### 🔧 Install Jenkins
+### 🛠️ Install curl (if not already installed)
 
 ```bash
 sudo apt update
-sudo apt install jenkins -y
-sudo systemctl start jenkins
-sudo systemctl enable jenkins
+sudo apt install curl -y
 ```
+
+---
+
+### 🌐 Install Chromium Browser (to access Jenkins GUI inside VM)
+
+```bash
+sudo snap install chromium
+```
+
+After installation, launch it via:
+
+```bash
+chromium-browser
+```
+
+---
+
+### ☕ Install Java via Snap (required for Jenkins)
+
+```bash
+sudo snap install openjdk
+```
+
+---
+
+### 🔧 Install Jenkins via Snap
+
+```bash
+sudo snap install jenkins --classic
+```
+
+Start Jenkins (if not auto-started):
+
+```bash
+sudo systemctl start snap.jenkins.daemon
+sudo systemctl enable snap.jenkins.daemon
+```
+
+---
 
 ### 🔑 Access Jenkins
 
-* Open browser: `http://localhost:8080`
+* Open Chromium browser: `http://localhost:8080`
 * Get admin password:
 
 ```bash
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+sudo cat /var/snap/jenkins/common/secrets/initialAdminPassword
 ```
+
+> 📌 **Note:** Jenkins via Snap runs in a confined environment. For Docker integrations, consider using the `apt` version if needed.
 
 ---
 
@@ -164,6 +198,8 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 sudo apt install curl wget apt-transport-https -y
 ```
 
+---
+
 ### 🐳 Install Docker (for Minikube driver)
 
 ```bash
@@ -171,6 +207,8 @@ sudo apt install docker.io -y
 sudo usermod -aG docker $USER
 newgrp docker
 ```
+
+---
 
 ### 🧪 Install kubectl
 
@@ -184,6 +222,8 @@ sudo apt update
 sudo apt install -y kubectl
 ```
 
+---
+
 ### 📦 Install Minikube
 
 ```bash
@@ -191,11 +231,15 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
+---
+
 ### 🚀 Start Minikube
 
 ```bash
 minikube start --driver=docker
 ```
+
+---
 
 ### ✅ Verify Kubernetes Node
 
@@ -203,7 +247,7 @@ minikube start --driver=docker
 kubectl get nodes
 ```
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 ## ✅ Final Checklist
 
@@ -227,4 +271,3 @@ Raise an issue here 👉 [https://github.com/TechGuru-DrVitthalKale/devops-pro-s
 Happy Learning!
 **\~ Dr. Vitthal Kale (TechGuru)**
 📺 YouTube: [https://www.youtube.com/@TechGuru\_Dr.VitthalKale](https://www.youtube.com/@TechGuru_Dr.VitthalKale)
-
